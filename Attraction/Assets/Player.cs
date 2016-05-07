@@ -60,14 +60,14 @@ public class Player : MonoBehaviour {
 				//Vitesse
 				velocity = Mathf.Clamp (velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
 				//Position
-				currentPosition.y = Mathf.Clamp (currentPosition.y + velocity * Time.deltaTime + Gravity, minHeight, maxHeight);
+				currentPosition.y = Mathf.Clamp (currentPosition.y + velocity * Time.deltaTime * SpeedModifierManager.speedModifier + Gravity, minHeight, maxHeight);
 			}
 		else {
 			//Retour à la position initiale après un hit
 			if (currentPosition.y > initialPosition.y)
-				currentPosition.y -= Mathf.Min(0.1f, (initialPosition.y - currentPosition.y) * -1);
+				currentPosition.y -= Mathf.Min(0.1f, (initialPosition.y - currentPosition.y) * -1)  * SpeedModifierManager.speedModifier;
 			else
-				currentPosition.y += Mathf.Min(0.1f, initialPosition.y - currentPosition.y);
+				currentPosition.y += Mathf.Min(0.1f, initialPosition.y - currentPosition.y)  * SpeedModifierManager.speedModifier;
 			if (currentPosition.y == initialPosition.y)
 				hit = false;
 		}

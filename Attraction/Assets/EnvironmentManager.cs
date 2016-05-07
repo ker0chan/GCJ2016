@@ -23,17 +23,17 @@ public class EnvironmentManager : MonoBehaviour {
 		foreach(Transform t in obstaclesContainer)
 		{
 			Vector3 obstaclePosition = t.position;
-			obstaclePosition.x += obstacleSpeed*Time.deltaTime;
+			obstaclePosition.x += obstacleSpeed*Time.deltaTime*SpeedModifierManager.speedModifier;
 			t.position = obstaclePosition;
 		}
 		foreach(Transform t in backgroundsContainer)
 		{
 			Vector3 backgroundPosition = t.localPosition;
-			backgroundPosition.x += backgroundSpeed*Time.deltaTime;
+			backgroundPosition.x += backgroundSpeed*Time.deltaTime*SpeedModifierManager.speedModifier;
 			t.localPosition = backgroundPosition;
 		}
 
-		currentObstacleSpawnTimer += Time.deltaTime;
+		currentObstacleSpawnTimer += Time.deltaTime*SpeedModifierManager.speedModifier;
 		if(currentObstacleSpawnTimer >= obstacleSpawnInterval)
 		{
 			currentObstacleSpawnTimer = 0.0f;
