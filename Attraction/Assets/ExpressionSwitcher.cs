@@ -13,7 +13,6 @@ public class ExpressionSwitcher : MonoBehaviour {
 
 	public SpriteInfo[] sprites;
 
-	[Yarn.Unity.YarnCommand("setsprite")]
 	public void UseSprite(string spriteName) {
 
 		//"off" command hides the Sprite

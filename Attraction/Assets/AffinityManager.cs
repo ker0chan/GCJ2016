@@ -18,8 +18,6 @@ public class AffinityManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DontDestroyOnLoad(gameObject);
-
 		foreach(NPCAffinity a in affinityLevels)
 		{
 			affinityLevelsDictionary.Add(a.name, a);

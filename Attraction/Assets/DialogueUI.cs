@@ -20,6 +20,8 @@ public class DialogueUI : Yarn.Unity.DialogueUIBehaviour
 
 	public GameObject NPCPortraits;
 	public AffinityManager affinityManager;
+
+	public SceneManager sceneManager;
 	
 	// A UI element that appears after lines have finished appearing
 	public GameObject continuePrompt;
@@ -166,6 +168,12 @@ public class DialogueUI : Yarn.Unity.DialogueUIBehaviour
 				string NPCName = commandElements[1];
 				int amount = (commandElements[2] == "plus" ? 1 : -1) * int.Parse(commandElements[3]);
 				affinityManager.AddAffinity(NPCName, amount);
+			}
+
+			// Syntax for this command = changeaffinity NAME SIGN AMOUNT
+			// The ExpressionSwitcher must have a sprite named SPRITENAME
+			if (commandElements[0] == "launchmission") {
+				sceneManager.LaunchMission();
 			}
 		}
 
