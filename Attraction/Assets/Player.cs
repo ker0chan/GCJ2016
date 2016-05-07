@@ -15,11 +15,13 @@ public class Player : MonoBehaviour {
 	//Limites de mouvement verticales du joueur
 	float maxHeight = 5.0f;
 	float minHeight = -5.0f;
-	//le player à touché ou non un obstacle
-	bool	hit = false;
+
 	//le player est dans une zone de gravité (0 = non)
 	float		Gravity = 0;
 	float		AttractionSpeed = 3f;
+
+	float shieldLevel = 1.0f;
+	float shileldRechargeRate = 0.05f;
 
 	//Position d'origine du vaisseau
 	Vector3 initialPosition;

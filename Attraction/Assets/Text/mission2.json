@@ -1,0 +1,12 @@
+[
+	{
+		"title": "mission2",
+		"tags": "",
+		"body": "<<setexpression mecano normal>>\nBla bla bla\nCapitaine, j'ai faim\n-> Tant pis pour toi.\n    <<changeaffinity mecano minus 5>>\n    <<setexpression mecano sad>>\n    T'abuses, Capitaine :( J't'aime pas :(\n    <<setexpression mecano off>>\n    <<setexpression pilote normal>>\n    Lolol, rage bien !\n-> Mange donc, mon petit pote :)\n    <<setexpression mecano happy>>\n    Miam miam, cimer Chef <3\n    <<setexpression mecano off>>\n    <<setexpression pilote normal>>\n    J'avoue tu gères Chef :D Je t'aime. Fort.\n<<setexpression pilote off>>\nAllez hop, en mission !\n<<launchmission>>",
+		"position": {
+			"x": 311,
+			"y": 199
+		},
+		"colorID": 0
+	}
+]

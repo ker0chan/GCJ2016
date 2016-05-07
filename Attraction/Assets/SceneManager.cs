@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SceneManager : MonoBehaviour {
 
@@ -10,13 +11,18 @@ public class SceneManager : MonoBehaviour {
 	string sceneToLoad;
 
 	public Transform narrativeBackground;
-	public Transform topicChoice;
 
 	public delegate void AfterLoadCallback();
 	protected AfterLoadCallback afterLoad;
 
+	Queue<string> missions = new Queue<string>();
+	public Yarn.Unity.DialogueRunner dialogueRunner;
+
 	// Use this for initialization
 	void Start () {
+		missions.Enqueue("mission2");
+		missions.Enqueue("mission3");
+		missions.Enqueue("mission4");
 	}
 	
 	// Update is called once per frame
@@ -58,9 +64,10 @@ public class SceneManager : MonoBehaviour {
 
 	public void OpenNarration()
 	{
-		
+		string nextDialogue = missions.Dequeue();
 		FadeInAndLoad("narrative", () => {
-			topicChoice.gameObject.SetActive(true);
+			narrativeBackground.gameObject.SetActive(true);
+			dialogueRunner.StartDialogue(nextDialogue);
 		});
 	}
 
@@ -68,7 +75,7 @@ public class SceneManager : MonoBehaviour {
 	{
 		FadeInAndLoad("arcadeDimitri", () => {
 			Debug.Log("test");
-			narrativeBackground.gameObject.SetActive(false);	
+			narrativeBackground.gameObject.SetActive(false);
 		});
 	}
 }
