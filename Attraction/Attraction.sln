@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{ECBEC02D-FA99-7024-3DE4-7D41FD032608}") = "Attraction", "Assembly-CSharp.csproj", "{36B360F5-7662-2AA5-D5E0-157DB1015C5E}"
 EndProject
+Project("{ECBEC02D-FA99-7024-3DE4-7D41FD032608}") = "Attraction", "Assembly-CSharp-Editor.csproj", "{2E0B6FEA-0600-4860-B794-C3DEE0E0CFFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{36B360F5-7662-2AA5-D5E0-157DB1015C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36B360F5-7662-2AA5-D5E0-157DB1015C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36B360F5-7662-2AA5-D5E0-157DB1015C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0B6FEA-0600-4860-B794-C3DEE0E0CFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0B6FEA-0600-4860-B794-C3DEE0E0CFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0B6FEA-0600-4860-B794-C3DEE0E0CFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0B6FEA-0600-4860-B794-C3DEE0E0CFFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

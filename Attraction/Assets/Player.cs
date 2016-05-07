@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
 	//Limites de mouvement verticales du joueur
 	float maxHeight = 5.0f;
 	float minHeight = -5.0f;
+	//le player à touché ou non un obstacle
+	bool	hit = false;
+	//le player est dans une zone de gravité (0 = non)
+	float		Gravity = 0;
+	float		AttractionSpeed = 0.1f;
 
 	//Position d'origine du vaisseau
 	Vector3 initialPosition;
@@ -45,15 +50,23 @@ public class Player : MonoBehaviour {
 		if(isInvincible())
 		{
 			currentInvincibility -= Time.deltaTime;
-
 			//TODO : Ramener le vaisseau à sa position initiale progressivement ?
 			//TODO : Ajouter un effet visuel pour indiquer qu'on est invincible
 		}
-		//Vitesse
-		velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
-		//Position
-		currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
-
+		if (hit == false) {
+				//Vitesse
+				velocity = Mathf.Clamp (velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
+				//Position
+				currentPosition.y = Mathf.Clamp (currentPosition.y + velocity * Time.deltaTime + Gravity, minHeight, maxHeight);
+			}
+		else {
+			if (currentPosition.y > initialPosition.y)
+				currentPosition.y -= Mathf.Min(0.1f, (initialPosition.y - currentPosition.y) * -1);
+			else
+				currentPosition.y += Mathf.Min(0.1f, initialPosition.y - currentPosition.y);
+			if (currentPosition.y == initialPosition.y)
+				hit = false;
+		}
 
 		//Changement de direction
 		if(Input.GetKeyDown(KeyCode.Space))
@@ -62,6 +75,12 @@ public class Player : MonoBehaviour {
 		}
 
 		transform.position = currentPosition;
+	}
+
+	void OnTriggerExit2D(Collider2D c)
+	{
+		if (c.GetComponent<GravityZone>() != null)
+			Gravity = 0.0f;
 	}
 
 	//Détection des collisions
@@ -78,6 +97,12 @@ public class Player : MonoBehaviour {
 		if (pickedUpReward != null)
 		{
 			PickUp(pickedUpReward);
+		}
+
+		GravityZone zone = c.GetComponent<GravityZone> ();
+		if (zone != null)
+		{
+			Gravity += AttractionSpeed * zone.directionEffects;
 		}
 	}
 
@@ -97,9 +122,10 @@ public class Player : MonoBehaviour {
 		currentInvincibility = invicibilityDuration;
 
 		//On reset la position du joueur, ainsi que sa vitesse et sa direction
-		transform.position = initialPosition;
+		//transform.position = initialPosition;
 		direction = -1;
 		velocity = 0.0f;
+		hit = true;
 	}
 
 	//Ramassage de ressource
