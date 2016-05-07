@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
@@ -8,10 +9,26 @@ public class LevelManager : MonoBehaviour {
 	bool running = false;
 	SceneManager sceneManager;
 
+	Dictionary<string, LevelData> levelDataDictionary = new Dictionary<string, LevelData>();
+
+	[System.Serializable]
+	public struct LevelData
+	{
+		public string name;
+		public GameObject[] obstaclesPrefabs;
+		public GameObject[] backgroundsPrefabs;
+	}
+
+	public LevelData[] levelDataArray;
+
 	// Use this for initialization
 	void Start () {
 		running = true;
 		sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+		foreach(LevelData ld in levelDataArray)
+		{
+			levelDataDictionary.Add(ld.name, ld);
+		}
 	}
 	
 	// Update is called once per frame
@@ -29,5 +46,9 @@ public class LevelManager : MonoBehaviour {
 	public float GetTimeRatio()
 	{
 		return currentTime/levelDuration;
+	}
+	public LevelData GetLevelData(string levelName)
+	{
+		return levelDataDictionary[levelName];
 	}
 }
