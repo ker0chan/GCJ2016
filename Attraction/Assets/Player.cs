@@ -69,6 +69,7 @@ public class Player : MonoBehaviour {
 				//Set la velocity et le step si on appuie sur une des touches
 				velocity = 1;
 				velocityStep = 6.0f;
+				velocity = Input.GetKey(KeyCode.UpArrow) ? 1 : -1;
 				//Set la direction à 1 si c'est la touche du haut, -1 sinon
 				direction = Input.GetKey(KeyCode.UpArrow) ? 1 : -1;
 			} else 
