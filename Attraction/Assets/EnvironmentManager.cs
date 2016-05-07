@@ -5,7 +5,9 @@ public class EnvironmentManager : MonoBehaviour {
 
 	public GameObject[] obstacles;
 	public Transform obstaclesContainer;
-
+	public float speed;
+	public float spawnInterval;
+	float currentSpawnTimer = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -17,12 +19,15 @@ public class EnvironmentManager : MonoBehaviour {
 		foreach(Transform t in obstaclesContainer)
 		{
 			Vector3 obstaclePosition = t.position;
-			obstaclePosition.x -= 0.4f;
+			obstaclePosition.x += speed*Time.deltaTime;
 			t.position = obstaclePosition;
-			if(t.position.x > 4.0f && t.position.x <= 4.4f)
-			{
-				Spawn();
-			}
+		}
+
+		currentSpawnTimer += Time.deltaTime;
+		if(currentSpawnTimer >= spawnInterval)
+		{
+			currentSpawnTimer = 0.0f;
+			Spawn();
 		}
 	}
 
