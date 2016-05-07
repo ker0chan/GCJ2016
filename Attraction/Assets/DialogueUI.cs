@@ -59,8 +59,6 @@ public class DialogueUI : Yarn.Unity.DialogueUIBehaviour
 	// Show a line of dialogue, gradually
 	public override IEnumerator RunLine (Yarn.Line line)
 	{
-		textContainer.sprite = line.text.StartsWith("Protagoniste")?protagonistContainerImage:otherContainerImage;
-
 		// Show the text
 		lineText.gameObject.SetActive (true);
 		
