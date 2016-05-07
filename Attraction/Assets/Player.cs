@@ -20,8 +20,15 @@ public class Player : MonoBehaviour {
 	float		Gravity = 0;
 	float		AttractionSpeed = 3f;
 
-	float shieldLevel = 1.0f;
-	float shileldRechargeRate = 0.05f;
+	//Niveau de bouclier actuel
+	int shieldLevel;
+	//Niveau de bouclier standard
+	int defaultShieldLevel = 5;
+
+	float teleportCooldown = 5.0f;
+	float currentTeleportCooldown = 0.0f;
+	bool teleporting = false;
+	public Transform cooldownIndicator; 
 
 	//Position d'origine du vaisseau
 	Vector3 initialPosition;
@@ -38,6 +45,7 @@ public class Player : MonoBehaviour {
 
 	int score = 0;
 	public Text scoreText;
+	public Text shieldText;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +53,11 @@ public class Player : MonoBehaviour {
 		initialPosition = transform.position;
 		//Initialise le texte du score
 		UpdateScore();
+
+		shieldLevel = defaultShieldLevel;
+		UpdateShield();
+
+		cooldownIndicator.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -95,33 +108,46 @@ public class Player : MonoBehaviour {
 			//Téléportation !
 			if(Input.GetMouseButtonDown(1))
 			{
-				//Debug.Log("TP INIT");
-				ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
-	 			em.enabled = true;
-				reticleSprite.gameObject.SetActive(true);
+				if(currentTeleportCooldown == 0.0f)
+				{
+					teleporting = true;
+					//Debug.Log("TP INIT");
+					ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
+		 			em.enabled = true;
+					reticleSprite.gameObject.SetActive(true);
 
-				SpeedModifierManager.speedModifier = 0.05f;
+					SpeedModifierManager.speedModifier = 0.05f;
+				}				
 			}
 			if(Input.GetMouseButton(1))
 			{
-				Vector3 screenTeleportPosition = Input.mousePosition;
-				Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
-				reticleSprite.position = new Vector3(worldTeleportPosition.x, worldTeleportPosition.y, 0);
+				if(teleporting)
+				{
+					Vector3 screenTeleportPosition = Input.mousePosition;
+					Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
+					reticleSprite.position = new Vector3(worldTeleportPosition.x, worldTeleportPosition.y, 0);
+				}
 			}
 			if(Input.GetMouseButtonUp(1))
 			{
-				//Debug.Log("TP DONE");
-				ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
-	 			em.enabled = false;
-				reticleSprite.gameObject.SetActive(false);
+				if(teleporting)
+				{
+					//Debug.Log("TP DONE");
+					ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
+		 			em.enabled = false;
+					reticleSprite.gameObject.SetActive(false);
 
-				SpeedModifierManager.speedModifier = 1;
-				Vector3 screenTeleportPosition = Input.mousePosition;
-				Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
-				currentPosition.x = worldTeleportPosition.x;
-				currentPosition.y = worldTeleportPosition.y;
+					SpeedModifierManager.speedModifier = 1;
+					Vector3 screenTeleportPosition = Input.mousePosition;
+					Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
+					currentPosition.x = worldTeleportPosition.x;
+					currentPosition.y = worldTeleportPosition.y;
 
-				velocity = 0.0f;
+					velocity = 0.0f;
+
+					teleporting = false;
+					currentTeleportCooldown = teleportCooldown;
+				}
 			}
 
 			//Retour à la position de base après une téléportation
@@ -129,6 +155,15 @@ public class Player : MonoBehaviour {
 			{
 				currentPosition.x -= Mathf.Min(5f * Time.deltaTime * SpeedModifierManager.speedModifier, currentPosition.x - initialPosition.x);
 			}
+		}
+
+		currentTeleportCooldown = Mathf.Max(currentTeleportCooldown - Time.deltaTime, 0.0f);
+		if(currentTeleportCooldown == 0.0f)
+		{
+			cooldownIndicator.gameObject.SetActive(false);
+		} else 
+		{
+			cooldownIndicator.gameObject.SetActive(true);
 		}
 
 		transform.position = currentPosition;
@@ -176,6 +211,15 @@ public class Player : MonoBehaviour {
 		//Invincibilité => on quitte la fonction
 		if(isInvincible()) return;
 
+		if(shieldLevel == 0)
+		{
+			
+		} else 
+		{
+			shieldLevel -= 1;
+			UpdateShield();
+		}
+
 		//On met le timer d'invincibilité au max
 		currentInvincibility = invicibilityDuration;
 	}
@@ -197,5 +241,10 @@ public class Player : MonoBehaviour {
 	void UpdateScore()
 	{
 		scoreText.text = score.ToString();
+	}
+	//Affiche le niveau de bouclier
+	void UpdateShield()
+	{
+		shieldText.text = shieldLevel.ToString();
 	}
 }
