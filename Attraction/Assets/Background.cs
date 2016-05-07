@@ -10,7 +10,7 @@ public class Background : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.localPosition.x <= -15.0f) {
+		if (transform.localPosition.x <= -17.0f) {
 			Destroy (transform.gameObject);
 		} 
 	}
