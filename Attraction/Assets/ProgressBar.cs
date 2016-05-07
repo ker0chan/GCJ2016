@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ProgressBar : MonoBehaviour {
 
-	Transform cursor;
+	public Transform cursor;
 	float parentWidth;
 	LevelManager levelManager;
 	// Use this for initialization
