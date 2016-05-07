@@ -26,6 +26,8 @@ public class Player : MonoBehaviour {
 	//Temps d'invincibilité restant
 	float currentInvincibility = 0.0f;
 
+	public ParticleSystem teleportParticleSystem;
+
 	int score = 0;
 	public Text scoreText;
 
@@ -52,13 +54,41 @@ public class Player : MonoBehaviour {
 		//Vitesse
 		velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
 		//Position
-		currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
+		currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime*SpeedModifierManager.speedModifier, minHeight, maxHeight);
 
 
 		//Changement de direction
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			direction = -direction;
+		}
+
+		if(Input.GetMouseButtonDown(1))
+		{
+			//Debug.Log("TP INIT");
+			ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
+ 			em.enabled = true;
+
+			SpeedModifierManager.speedModifier = 0.05f;
+		}
+		if(Input.GetMouseButtonUp(1))
+		{
+			//Debug.Log("TP DONE");
+			ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
+ 			em.enabled = false;
+
+			SpeedModifierManager.speedModifier = 1;
+			Vector3 screenTeleportPosition = Input.mousePosition;
+			Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
+			currentPosition.x = worldTeleportPosition.x;
+			currentPosition.y = worldTeleportPosition.y;
+
+			velocity = 0.0f;
+		}
+
+		if(currentPosition.x > initialPosition.x)
+		{
+			currentPosition.x -= Mathf.Min(5f * Time.deltaTime * SpeedModifierManager.speedModifier, currentPosition.x - initialPosition.x);
 		}
 
 		transform.position = currentPosition;
@@ -71,6 +101,7 @@ public class Player : MonoBehaviour {
 		if (c.GetComponent<Obstacle>() != null)
 		{
 			Hit();
+			Debug.Log("HIT");
 		}
 
 		//Reward
