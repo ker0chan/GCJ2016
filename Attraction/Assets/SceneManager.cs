@@ -20,9 +20,9 @@ public class SceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		missions.Enqueue("mission1");
 		missions.Enqueue("mission2");
 		missions.Enqueue("mission3");
-		missions.Enqueue("mission4");
 	}
 	
 	// Update is called once per frame
