@@ -15,4 +15,12 @@ public class Obstacle : MonoBehaviour {
 		} 
 	}
 
+	public void SetGravityZone(int direction)
+	{
+		GravityZone gz = GetComponentInChildren<GravityZone>();
+		if(gz != null)
+		{
+			gz.Show(direction);
+		}
+	}
 }
