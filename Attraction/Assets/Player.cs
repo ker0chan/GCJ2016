@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
 	float currentInvincibility = 0.0f;
 
 	public ParticleSystem teleportParticleSystem;
+	public Transform reticleSprite;
 
 	int score = 0;
 	public Text scoreText;
@@ -94,14 +95,22 @@ public class Player : MonoBehaviour {
 				//Debug.Log("TP INIT");
 				ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
 	 			em.enabled = true;
+				reticleSprite.gameObject.SetActive(true);
 
 				SpeedModifierManager.speedModifier = 0.05f;
+			}
+			if(Input.GetMouseButton(1))
+			{
+				Vector3 screenTeleportPosition = Input.mousePosition;
+				Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
+				reticleSprite.position = new Vector3(worldTeleportPosition.x, worldTeleportPosition.y, 0);
 			}
 			if(Input.GetMouseButtonUp(1))
 			{
 				//Debug.Log("TP DONE");
 				ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
 	 			em.enabled = false;
+				reticleSprite.gameObject.SetActive(false);
 
 				SpeedModifierManager.speedModifier = 1;
 				Vector3 screenTeleportPosition = Input.mousePosition;
