@@ -14,4 +14,9 @@ public class Reward : MonoBehaviour {
 			Destroy (transform.gameObject);
 		} 
 	}
+
+	public void PickUp()
+	{
+		Destroy(transform.gameObject);
+	}
 }

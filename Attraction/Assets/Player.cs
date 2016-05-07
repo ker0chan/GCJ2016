@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -14,6 +15,9 @@ public class Player : MonoBehaviour {
 
 	public float invicibilityDuration;
 	float currentInvincibility = 0.0f;
+
+	int score = 0;
+	public Text scoreText;
 
 	// Use this for initialization
 	void Start () {
@@ -53,9 +57,11 @@ public class Player : MonoBehaviour {
 		{
 			Hit();
 		}
-		if (c.GetComponent<Rewards>() != null)
+
+		Reward pickedUpReward = c.GetComponent<Reward>();
+		if (pickedUpReward != null)
 		{
-			//TODO
+			PickUp(pickedUpReward);
 		}
 	}
 
@@ -74,6 +80,17 @@ public class Player : MonoBehaviour {
 		transform.position = initialPosition;
 		direction = -1;
 		velocity = 0.0f;
+	}
 
+	void PickUp(Reward reward)
+	{
+		reward.PickUp();
+		score += 1;
+		UpdateScore();
+	}
+
+	void UpdateScore()
+	{
+		scoreText.text = score.ToString();
 	}
 }
