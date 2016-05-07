@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
 	public float invicibilityDuration;
 	//Temps d'invincibilité restant
 	float currentInvincibility = 0.0f;
+	public Animator blinkAnimator;
 
 	public ParticleSystem teleportParticleSystem;
 	public Transform reticleSprite;
@@ -210,7 +211,7 @@ public class Player : MonoBehaviour {
 	{
 		//Invincibilité => on quitte la fonction
 		if(isInvincible()) return;
-
+		blinkAnimator.SetTrigger("Hit");
 		if(shieldLevel == 0)
 		{
 			

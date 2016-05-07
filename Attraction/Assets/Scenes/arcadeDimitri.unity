@@ -2344,6 +2344,7 @@ GameObject:
   - 114: {fileID: 1035298173}
   - 50: {fileID: 1035298174}
   - 60: {fileID: 1035298175}
+  - 95: {fileID: 1035298176}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2382,7 +2383,8 @@ MonoBehaviour:
   maxVelocity: 8
   velocityStep: 0.4
   cooldownIndicator: {fileID: 1898229089}
-  invicibilityDuration: 3
+  invicibilityDuration: 1
+  blinkAnimator: {fileID: 1035298176}
   teleportParticleSystem: {fileID: 1643971139}
   reticleSprite: {fileID: 1122765605}
   scoreText: {fileID: 124762364}
@@ -2424,6 +2426,23 @@ PolygonCollider2D:
       - {x: 0.45691824, y: -0.17990904}
       - {x: -0.60443306, y: -0.10017283}
       - {x: -0.6036763, y: 0.16940284}
+--- !u!95 &1035298176
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1035298171}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb0764842093216438dc44d7aaf6b831, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1122765604
 GameObject:
   m_ObjectHideFlags: 0
