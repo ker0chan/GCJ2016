@@ -15,23 +15,21 @@ public class Player : MonoBehaviour {
 	//Limites de mouvement verticales du joueur
 	float maxHeight = 5.0f;
 	float minHeight = -5.0f;
-	//le player à touché ou non un obstacle
-	bool	hit = false;
-	//le player est dans une zone de gravité (0 = non)
-	float		Gravity = 0;
-	float		AttractionSpeed = 0.1f;
 
 	//Position d'origine du vaisseau
 	Vector3 initialPosition;
 	//Position à laquelle le vaisseau a heurté un obstacle
 	Vector3 hitPosition;
 
+	//Durée de direction
+	public float directionDuration;
+	//Temps avant le changement de direction
+	float	currentDuration = 0.0f;
+
 	//Durée d'invincibilité
 	public float invicibilityDuration;
 	//Temps d'invincibilité restant
 	float currentInvincibility = 0.0f;
-
-	public ParticleSystem teleportParticleSystem;
 
 	int score = 0;
 	public Text scoreText;
@@ -48,71 +46,71 @@ public class Player : MonoBehaviour {
 	void Update () {
 		//Variable temporaire
 		Vector3 currentPosition = transform.position;
+		Debug.Log (velocityStep);
 
+		if (isMove ()) {
+			currentDuration -= 0.05f;
+		}
 		if(isInvincible())
 		{
 			currentInvincibility -= Time.deltaTime;
+
 			//TODO : Ramener le vaisseau à sa position initiale progressivement ?
 			//TODO : Ajouter un effet visuel pour indiquer qu'on est invincible
 		}
 
-		if (hit == false) {
-				//Vitesse
-				velocity = Mathf.Clamp (velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
-				//Position
-				currentPosition.y = Mathf.Clamp (currentPosition.y + velocity * Time.deltaTime * SpeedModifierManager.speedModifier + Gravity, minHeight, maxHeight);
+		if (velocityStep > 3.0f)
+			velocityStep -= 0.3f;
+		//Changement de direction
+
+	
+	/*	// Up and Down
+		if(Input.GetKey(KeyCode.UpArrow))
+		{
+			velocityStep = 6.0f;
+			direction = 1;
+			velocity = 1;
+			velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
+			currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
+			currentDuration = directionDuration;
+		}
+		if(Input.GetKey(KeyCode.DownArrow))
+		{
+			velocityStep = 6.0f;
+			direction = -1;
+			velocity = 1;
+			velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
+			currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
+			currentDuration = directionDuration;
 			}
-		else {
-			//Retour à la position initiale après un hit
-			if (currentPosition.y > initialPosition.y)
-				currentPosition.y -= Mathf.Min(0.1f, (initialPosition.y - currentPosition.y) * -1)  * SpeedModifierManager.speedModifier;
-			else
-				currentPosition.y += Mathf.Min(0.1f, initialPosition.y - currentPosition.y)  * SpeedModifierManager.speedModifier;
-			if (currentPosition.y == initialPosition.y)
-				hit = false;
+		velocity = 0;
+		direction = 0;*/
+
+		//Style JetPack JoyRide
+		if (currentDuration <= 0.0f)
+			direction = -1;
+		velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
+		currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
+		if(Input.GetKey(KeyCode.Space))
+		{
+			currentDuration = directionDuration;
+			velocityStep = 6.0f;
+			direction = 1;
 		}
 
-		//Changement de direction
+		//Style Flappy Bird
+		/*if (currentDuration <= 0.0f)
+			direction = -1;
+		velocity = Mathf.Clamp(velocity + (velocityStep * direction), -maxVelocity, maxVelocity);
+		currentPosition.y = Mathf.Clamp(currentPosition.y + velocity*Time.deltaTime, minHeight, maxHeight);
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			direction = -direction;
-		}
-
-		if(Input.GetMouseButtonDown(1))
-		{
-			//Debug.Log("TP INIT");
-			ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
- 			em.enabled = true;
-
-			SpeedModifierManager.speedModifier = 0.05f;
-		}
-		if(Input.GetMouseButtonUp(1))
-		{
-			//Debug.Log("TP DONE");
-			ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
- 			em.enabled = false;
-
-			SpeedModifierManager.speedModifier = 1;
-			Vector3 screenTeleportPosition = Input.mousePosition;
-			Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
-			currentPosition.x = worldTeleportPosition.x;
-			currentPosition.y = worldTeleportPosition.y;
-
-			velocity = 0.0f;
-		}
-
-		if(currentPosition.x > initialPosition.x)
-		{
-			currentPosition.x -= Mathf.Min(5f * Time.deltaTime * SpeedModifierManager.speedModifier, currentPosition.x - initialPosition.x);
-		}
+			currentDuration = directionDuration;
+			velocityStep = 6.0f;
+			direction = 1;
+		}*/
 
 		transform.position = currentPosition;
-	}
-
-	void OnTriggerExit2D(Collider2D c)
-	{
-		if (c.GetComponent<GravityZone>() != null)
-			Gravity = 0.0f;
 	}
 
 	//Détection des collisions
@@ -122,7 +120,6 @@ public class Player : MonoBehaviour {
 		if (c.GetComponent<Obstacle>() != null)
 		{
 			Hit();
-			Debug.Log("HIT");
 		}
 
 		//Reward
@@ -131,12 +128,12 @@ public class Player : MonoBehaviour {
 		{
 			PickUp(pickedUpReward);
 		}
+	}
 
-		GravityZone zone = c.GetComponent<GravityZone> ();
-		if (zone != null)
-		{
-			Gravity += AttractionSpeed * zone.directionEffects;
-		}
+	//Le joueur se dirige déjà vers le haut ?
+	bool isMove()
+	{
+		return currentDuration > 0.0f;
 	}
 
 	//Le joueur est-il invincible en ce moment ?
@@ -155,10 +152,9 @@ public class Player : MonoBehaviour {
 		currentInvincibility = invicibilityDuration;
 
 		//On reset la position du joueur, ainsi que sa vitesse et sa direction
-		//transform.position = initialPosition;
+		transform.position = initialPosition;
 		direction = -1;
 		velocity = 0.0f;
-		hit = true;
 	}
 
 	//Ramassage de ressource

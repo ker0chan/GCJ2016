@@ -13,14 +13,13 @@ public class DialogueUI : Yarn.Unity.DialogueUIBehaviour
 	// disabled when it ends.
 	public GameObject dialogueContainer;
 
-	public Sprite protagonistContainerImage;
-	public Sprite otherContainerImage;
 	// The UI element that contains displayed lines
 	public Image textContainer;
 	// The UI element that displays lines
 	public Text lineText;
 
 	public GameObject NPCPortraits;
+	public AffinityManager affinityManager;
 	
 	// A UI element that appears after lines have finished appearing
 	public GameObject continuePrompt;
@@ -157,6 +156,16 @@ public class DialogueUI : Yarn.Unity.DialogueUIBehaviour
 				Debug.Log("Setting expression "+commandElements[2]);
 				var spriteName = commandElements[2];
 				switcher.UseSprite(spriteName);
+			}
+
+			// Syntax for this command = changeaffinity NAME SIGN AMOUNT
+			// The ExpressionSwitcher must have a sprite named SPRITENAME
+			if (commandElements[0] == "changeaffinity") {
+				Debug.Log("Modifying affinity level of NPC "+commandElements[1]);
+				Debug.Log(commandElements[2]+ " " +commandElements[3]);
+				string NPCName = commandElements[1];
+				int amount = (commandElements[2] == "plus" ? 1 : -1) * int.Parse(commandElements[3]);
+				affinityManager.AddAffinity(NPCName, amount);
 			}
 		}
 
