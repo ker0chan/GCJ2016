@@ -45,14 +45,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AffinityLevel.cs" />
+     <Compile Include="Assets\AffinityManager.cs" />
+     <Compile Include="Assets\Background.cs" />
+     <Compile Include="Assets\DialogueUI.cs" />
      <Compile Include="Assets\EnvironmentManager.cs" />
+     <Compile Include="Assets\ExpressionSwitcher.cs" />
+     <Compile Include="Assets\GravityZone.cs" />
      <Compile Include="Assets\Obstacle.cs" />
+     <Compile Include="Assets\OrthographicTransparencyCamera.cs" />
      <Compile Include="Assets\Player.cs" />
+     <Compile Include="Assets\Reward.cs" />
+     <Compile Include="Assets\Rewards.cs" />
+     <Compile Include="Assets\SpeedModifierManager.cs" />
+     <Compile Include="Assets\Yarn Spinner\Code\DialogueRunner.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\ExampleDialogueUI.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\ExampleVariableStorage.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\MobileOnly.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\NPC.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\PlayerCharacter.cs" />
+     <Compile Include="Assets\Yarn Spinner\Examples\Demo Scripts\SpriteSwitcher.cs" />
+     <None Include="Assets\Yarn Spinner\README.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="YarnSpinner">
+ <HintPath>C:/Prog/Unity/GCJ2016/Attraction/Assets/Yarn Spinner/Code/YarnSpinner.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
