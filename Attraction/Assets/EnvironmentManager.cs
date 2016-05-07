@@ -9,9 +9,9 @@ public class EnvironmentManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Spawn();
+		Spawn ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		foreach(Transform t in obstaclesContainer)
@@ -19,7 +19,7 @@ public class EnvironmentManager : MonoBehaviour {
 			Vector3 obstaclePosition = t.position;
 			obstaclePosition.x -= 0.4f;
 			t.position = obstaclePosition;
-			if(t.position.x > 3.5f && t.position.x <= 3.9f)
+			if(t.position.x > 4.0f && t.position.x <= 4.4f)
 			{
 				Spawn();
 			}
