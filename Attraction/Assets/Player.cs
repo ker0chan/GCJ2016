@@ -105,6 +105,9 @@ public class Player : MonoBehaviour {
 	//Ramassage de ressource
 	void PickUp(Reward reward)
 	{
+		//Invincibilité => on quitte la fonction
+		if(isInvincible()) return;
+
 		//Notifie la reward qu'elle a été ramassée
 		reward.PickUp();
 		//Augmente le score
