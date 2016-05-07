@@ -5,7 +5,7 @@ public class GravityZone : MonoBehaviour {
 
 	public Transform upEffects;
 	public Transform downEffects;
-
+	public int		directionEffects = 0;
 	// Use this for initialization
 	void Start () {
 	
@@ -22,12 +22,18 @@ public class GravityZone : MonoBehaviour {
 		downEffects.gameObject.SetActive(false);
 		switch (direction)
 		{
-			case 1:
-				upEffects.gameObject.SetActive(true);
-			break;
-			case -1:
-				downEffects.gameObject.SetActive(true);
-			break;
+		case 1:
+			{
+				upEffects.gameObject.SetActive (true);
+				directionEffects = 1;
+				break;
+			}
+		case -1:
+			{
+				downEffects.gameObject.SetActive (true);
+				directionEffects = -1;
+				break;
+			}
 		}
 	}
 }
