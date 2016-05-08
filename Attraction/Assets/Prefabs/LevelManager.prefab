@@ -40,23 +40,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1b3c8aee7f83a43b5c13b8ed6192b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: mission1
+  currentLevel: mission3
   levelDataArray:
   - name: mission1
     obstaclesPrefabs:
-    - {fileID: 190296, guid: c7ba998b7d196d741b0258055d0214dc, type: 2}
-    backgroundsPrefabs:
-    - {fileID: 117450, guid: 0234a4c9433fb6e4b9a57a272744d0ba, type: 2}
-  - name: mission2
-    obstaclesPrefabs:
+    - {fileID: 161978, guid: 29eb94cfd4c8e004794256d2b8499d54, type: 2}
+    - {fileID: 186328, guid: 8cb021a7a56667a41b1a410ab09d55fd, type: 2}
+    - {fileID: 181718, guid: d4d02ed13ae7832449dadd85513ed7b8, type: 2}
+    - {fileID: 194932, guid: aada5f90e2c9a3540816241fc063d668, type: 2}
+    - {fileID: 110898, guid: e15be293c629acb41826d38b28e4f0ea, type: 2}
+    - {fileID: 140384, guid: 4a09fc867d6fbaa43ba8293bc0207a02, type: 2}
+    - {fileID: 115024, guid: c45eae5489a65fa40b68adc3c27869e9, type: 2}
+    - {fileID: 183626, guid: 5970b2192daac7b4eaba6630f2319e26, type: 2}
     - {fileID: 101898, guid: fd43320f02f159d40960e76e5865376f, type: 2}
+    - {fileID: 117464, guid: b484566387b31534cad3c974285beb17, type: 2}
     backgroundsPrefabs:
     - {fileID: 135698, guid: b9ccaf18af625fa499384d6bd323937c, type: 2}
+    - {fileID: 145528, guid: 3135ebe7eac95bf4691e0b2af9919d0a, type: 2}
+    - {fileID: 185966, guid: 52b3b6b15539b634685bf4bd0b37638b, type: 2}
+  - name: mission2
+    obstaclesPrefabs:
+    - {fileID: 170466, guid: 44e243156ff2dbb49b55a602330df4d2, type: 2}
+    - {fileID: 132924, guid: 4021ae6ee5485d346b5b9a0d5156cf3f, type: 2}
+    - {fileID: 189976, guid: 19f05a4dd891fdb44bb30cf4898f24d9, type: 2}
+    - {fileID: 108456, guid: a850ccfa3d6dd18408335186347270b3, type: 2}
+    - {fileID: 190296, guid: c7ba998b7d196d741b0258055d0214dc, type: 2}
+    backgroundsPrefabs:
+    - {fileID: 114140, guid: b919d53fcdbc1a9428ebde1fdbdfdc86, type: 2}
+    - {fileID: 117450, guid: 0234a4c9433fb6e4b9a57a272744d0ba, type: 2}
+    - {fileID: 132994, guid: 4d923bc0662979646a65aeb12fe658b7, type: 2}
   - name: mission3
     obstaclesPrefabs:
-    - {fileID: 108456, guid: a850ccfa3d6dd18408335186347270b3, type: 2}
+    - {fileID: 194408, guid: 7ce7487153952184daf4b399b25aab99, type: 2}
+    - {fileID: 168906, guid: 04d130e8c1f0f0d4ab2de9a205364b29, type: 2}
+    - {fileID: 163442, guid: 8150eb9d9bfc22640a074175a0b43d18, type: 2}
+    - {fileID: 105214, guid: 9c458ead02e336743a2f1b5f5ec1186b, type: 2}
+    - {fileID: 182134, guid: b09f88989f2883949838d730e2ab149a, type: 2}
+    - {fileID: 193530, guid: 73822125058d1c0469d96976c8d3a83c, type: 2}
     backgroundsPrefabs:
-    - {fileID: 132994, guid: 4d923bc0662979646a65aeb12fe658b7, type: 2}
+    - {fileID: 140122, guid: da5acfc931952bf4cbf76cd103cc6fe6, type: 2}
+    - {fileID: 195040, guid: e7817d9b8f540604183a0c293765e04f, type: 2}
+    - {fileID: 182618, guid: 62e50be8265e7974aae55b87a81f02d8, type: 2}
 --- !u!114 &11492232
 MonoBehaviour:
   m_ObjectHideFlags: 1
