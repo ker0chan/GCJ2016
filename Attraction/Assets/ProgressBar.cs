@@ -20,8 +20,6 @@ public class ProgressBar : MonoBehaviour {
 
 	void SetProgress(float amount)
 	{
-		Debug.Log(amount);
-		Debug.Log(parentWidth);
 		cursor.localPosition = new Vector3(parentWidth * amount - parentWidth/2, 0, 0) ;
 	}
 }
