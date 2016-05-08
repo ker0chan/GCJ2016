@@ -18,6 +18,7 @@ public class SceneManager : MonoBehaviour {
 	Queue<string> missions = new Queue<string>();
 	public Yarn.Unity.DialogueRunner dialogueRunner;
 	public LevelManager levelManager;
+	public MusicManager musicManager;
 
 	// Use this for initialization
 	void Start () {
@@ -70,6 +71,8 @@ public class SceneManager : MonoBehaviour {
 	{
 		string nextDialogue = missions.Dequeue();
 		FadeInAndLoad("narrative", () => {
+			musicManager.Play("quiet");
+			musicManager.Stop("battle");
 			narrativeBackground.gameObject.SetActive(true);
 			dialogueRunner.StartDialogue(nextDialogue);
 		});
@@ -79,6 +82,8 @@ public class SceneManager : MonoBehaviour {
 	{
 		string nextLevel = missions.Dequeue();
 		FadeInAndLoad("arcadeDimitri", () => {
+			musicManager.Play("battle");
+			musicManager.Stop("quiet");
 			levelManager.Run();
 			narrativeBackground.gameObject.SetActive(false);
 			GameObject.Find("LevelManager").GetComponent<LevelManager>().currentLevel = nextLevel;
