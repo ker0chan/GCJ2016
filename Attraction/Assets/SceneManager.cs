@@ -21,7 +21,10 @@ public class SceneManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		missions.Enqueue("mission1");
+		missions.Enqueue("mission1");
 		missions.Enqueue("mission2");
+		missions.Enqueue("mission2");
+		missions.Enqueue("mission3");
 		missions.Enqueue("mission3");
 	}
 	
@@ -73,9 +76,10 @@ public class SceneManager : MonoBehaviour {
 
 	public void LaunchMission()
 	{
+		string nextLevel = missions.Dequeue();
 		FadeInAndLoad("arcadeDimitri", () => {
-			Debug.Log("test");
 			narrativeBackground.gameObject.SetActive(false);
+			GameObject.Find("LevelManager").GetComponent<LevelManager>().currentLevel = nextLevel;
 		});
 	}
 }

@@ -3,8 +3,9 @@ using System.Collections;
 
 public class EnvironmentManager : MonoBehaviour {
 
-	public GameObject[] obstacles;
-	public GameObject[] backgrounds;
+	LevelManager levelManager;
+	GameObject[] obstacles;
+	GameObject[] backgrounds;
 	public Transform obstaclesContainer;
 	public Transform backgroundsContainer;
 	public float obstacleSpeed;
@@ -14,6 +15,13 @@ public class EnvironmentManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+		levelManager.Init();
+		LevelManager.LevelData currentLevelData = levelManager.GetCurrentLevelData();
+		obstacles = currentLevelData.obstaclesPrefabs;
+		Debug.Log(obstacles.Length);
+		backgrounds = currentLevelData.backgroundsPrefabs;
+		Debug.Log(backgrounds.Length);
 		SpawnBackground();
 		SpawnBackground();
 	}
