@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
 	//Position à laquelle le vaisseau a heurté un obstacle
 	Vector3 hitPosition;
 
+	float previousRightTriggerValue = 0.0f;
+
 	//Durée d'invincibilité
 	public float invicibilityDuration;
 	//Temps d'invincibilité restant
@@ -66,6 +68,8 @@ public class Player : MonoBehaviour {
 		//Variable temporaire
 		Vector3 currentPosition = transform.position;
 
+		float rightTriggerValue = Input.GetAxis("RightTrigger");
+
 		//Invincibilité : on retourne à sa place initiale et on ne peut rien faire :(
 		if(isInvincible())
 		{
@@ -86,7 +90,14 @@ public class Player : MonoBehaviour {
 				velocity = Input.GetKey(KeyCode.UpArrow) ? 1 : -1;
 				//Set la direction à 1 si c'est la touche du haut, -1 sinon
 				direction = Input.GetKey(KeyCode.UpArrow) ? 1 : -1;
-			} else 
+			} else if(Mathf.Abs(Input.GetAxis("LeftJoystickY")) >= 0.2f)
+			{
+				//Set la velocity et le step si on appuie sur une des touches
+				velocityStep = 6.0f;
+				velocity = (Input.GetAxis("LeftJoystickY") < 0.0f) ? 1 : -1;
+				//Set la direction à 1 si c'est la touche du haut, -1 sinon
+				direction = (Input.GetAxis("LeftJoystickY") < 0.0f) ? 1 : -1;
+			} else
 			{
 				velocity = 0;
 				direction = 0;
@@ -107,7 +118,7 @@ public class Player : MonoBehaviour {
 				maxHeight);
 
 			//Téléportation !
-			if(Input.GetMouseButtonDown(1))
+			if(Input.GetMouseButtonDown(1) || rightTriggerValue < previousRightTriggerValue-0.2f)
 			{
 				if(currentTeleportCooldown == 0.0f)
 				{
@@ -129,20 +140,43 @@ public class Player : MonoBehaviour {
 					reticleSprite.position = new Vector3(worldTeleportPosition.x, worldTeleportPosition.y, 0);
 				}
 			}
-			if(Input.GetMouseButtonUp(1))
+			if(rightTriggerValue < -0.2f)
+			{
+				if(Mathf.Abs(Input.GetAxis("RightJoystickY")) >= 0.2f || Mathf.Abs(Input.GetAxis("RightJoystickX")) >= 0.2f)
+				{
+					Vector3 temp = reticleSprite.localPosition;
+					temp.x += Input.GetAxis("RightJoystickX") * 0.3f;
+					temp.y -= Input.GetAxis("RightJoystickY") * 0.3f;
+					if(temp.magnitude > 8.0f)
+					{
+						temp *= (8.0f / temp.magnitude);
+					}
+					if(temp.x < 0.0f)
+					{
+						temp.x = 0.0f;
+					}
+					reticleSprite.localPosition = temp;
+
+
+				}
+			}
+			if(Input.GetMouseButtonUp(1) || rightTriggerValue > previousRightTriggerValue)
 			{
 				if(teleporting)
 				{
 					//Debug.Log("TP DONE");
 					ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
 		 			em.enabled = false;
-					reticleSprite.gameObject.SetActive(false);
 
 					SpeedModifierManager.speedModifier = 1;
-					Vector3 screenTeleportPosition = Input.mousePosition;
+					/*Vector3 screenTeleportPosition = Input.mousePosition;
 					Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
-					currentPosition.x = worldTeleportPosition.x;
-					currentPosition.y = worldTeleportPosition.y;
+					*/
+					currentPosition.x = reticleSprite.position.x;
+					currentPosition.y = reticleSprite.position.y;
+
+					reticleSprite.gameObject.SetActive(false);
+					reticleSprite.localPosition = Vector3.zero;
 
 					velocity = 0.0f;
 
@@ -166,6 +200,8 @@ public class Player : MonoBehaviour {
 		{
 			cooldownIndicator.gameObject.SetActive(true);
 		}
+
+		previousRightTriggerValue = rightTriggerValue;
 
 		transform.position = currentPosition;
 	}
