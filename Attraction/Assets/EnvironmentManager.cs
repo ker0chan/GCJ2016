@@ -63,9 +63,9 @@ public class EnvironmentManager : MonoBehaviour {
 		GameObject obstacle = (GameObject) Instantiate (obstacles[randomObstacle]);
 		int gravityDirection = (Random.Range(0.0f, 1.0f) > 0.5)?1:-1;
 
-		//Minimum : x > 1/6 => 5 chance sur 6 d'avoir une zone de gravité
-		//Maximum : x > 6/6 => 0 chance sur 6 d'avoir une zone de gravité
-		bool gravityChance = Random.Range(0.0f, 1.0f) > (affinityManager.GetAffinity("pilote")/6);
+		//Minimum : x > 1/7 => 6 chance sur 7 d'avoir une zone de gravité
+		//Maximum : x > 7/7 => 0 chance sur 7 d'avoir une zone de gravité
+		bool gravityChance = Random.Range(0.0f, 1.0f) > (affinityManager.GetAffinity("pilote")/7);
 
 		obstacle.GetComponent<Obstacle>().SetGravityZone(gravityChance?gravityDirection:0);
 		obstacle.transform.SetParent(obstaclesContainer, false);

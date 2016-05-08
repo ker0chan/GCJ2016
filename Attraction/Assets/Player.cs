@@ -61,9 +61,9 @@ public class Player : MonoBehaviour {
 		UpdateScore();
 
 		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
-		//Minimum : 1/3
-		//Maximum: 6/3 = 2
-		float cooldownMultiplier = (float)(7-affinityManager.GetAffinity("bio")) / 3.0f;
+		//Minimum : 1/3.5
+		//Maximum: 7/3.5 = 2
+		float cooldownMultiplier = (float)(8-affinityManager.GetAffinity("bio")) / 3.5f;
 		teleportCooldown *= cooldownMultiplier;
 
 		shieldLevel = defaultShieldLevel + affinityManager.GetAffinity("mecano");

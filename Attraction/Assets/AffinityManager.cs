@@ -33,7 +33,7 @@ public class AffinityManager : MonoBehaviour {
 	public void AddAffinity(string name, int amount)
 	{
 		NPCAffinity a = affinityLevelsDictionary[name];
-		a.affinity = Mathf.Clamp(a.affinity + amount, 1, 6);
+		a.affinity = Mathf.Clamp(a.affinity + amount, 1, 7);
 		a.level.SetAmount(a.affinity);
 	}
 
