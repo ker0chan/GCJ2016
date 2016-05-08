@@ -1029,14 +1029,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   affinityLevels:
   - name: mecano
-    affinity: 50
-    level: {fileID: 1852552547}
-  - name: pilote
-    affinity: 50
+    affinity: 2
     level: {fileID: 1864342669}
-  - name: bio
-    affinity: 50
+  - name: pilote
+    affinity: 2
     level: {fileID: 1358485919}
+  - name: bio
+    affinity: 2
+    level: {fileID: 1852552547}
 --- !u!4 &849915306
 Transform:
   m_ObjectHideFlags: 0
@@ -1272,6 +1272,7 @@ MonoBehaviour:
   fadeTarget: {fileID: 2063736628}
   narrativeBackground: {fileID: 810289399}
   dialogueRunner: {fileID: 1710371523}
+  levelManager: {fileID: 2052226304}
 --- !u!4 &1055490315
 Transform:
   m_ObjectHideFlags: 0
@@ -2460,6 +2461,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2042463428}
+--- !u!114 &2052226304 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11471798, guid: 2a3bd237586e3c443aafdcb3724c8ede,
+    type: 2}
+  m_PrefabInternal: {fileID: 848928601}
+  m_Script: {fileID: 11500000, guid: 4e1b3c8aee7f83a43b5c13b8ed6192b8, type: 3}
 --- !u!1 &2059612000
 GameObject:
   m_ObjectHideFlags: 0

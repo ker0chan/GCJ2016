@@ -17,6 +17,7 @@ public class SceneManager : MonoBehaviour {
 
 	Queue<string> missions = new Queue<string>();
 	public Yarn.Unity.DialogueRunner dialogueRunner;
+	public LevelManager levelManager;
 
 	// Use this for initialization
 	void Start () {
@@ -78,6 +79,7 @@ public class SceneManager : MonoBehaviour {
 	{
 		string nextLevel = missions.Dequeue();
 		FadeInAndLoad("arcadeDimitri", () => {
+			levelManager.Run();
 			narrativeBackground.gameObject.SetActive(false);
 			GameObject.Find("LevelManager").GetComponent<LevelManager>().currentLevel = nextLevel;
 		});

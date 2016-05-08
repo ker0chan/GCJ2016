@@ -20,6 +20,9 @@ public class Player : MonoBehaviour {
 	float		Gravity = 0;
 	float		AttractionSpeed = 3f;
 
+	//gestionnaire d'affinités
+	AffinityManager affinityManager;
+
 	//Niveau de bouclier actuel
 	int shieldLevel;
 	//Niveau de bouclier standard
@@ -57,7 +60,13 @@ public class Player : MonoBehaviour {
 		//Initialise le texte du score
 		UpdateScore();
 
-		shieldLevel = defaultShieldLevel;
+		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
+		//Minimum : 1/3
+		//Maximum: 6/3 = 2
+		float cooldownMultiplier = (float)(7-affinityManager.GetAffinity("bio")) / 3.0f;
+		teleportCooldown *= cooldownMultiplier;
+
+		shieldLevel = defaultShieldLevel + affinityManager.GetAffinity("mecano");
 		UpdateShield();
 
 		cooldownIndicator.gameObject.SetActive(false);
@@ -219,7 +228,6 @@ public class Player : MonoBehaviour {
 		if (c.GetComponent<Obstacle>() != null)
 		{
 			Hit();
-			Debug.Log(c.name);
 		}
 
 		//Reward

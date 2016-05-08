@@ -19,6 +19,7 @@ public class AffinityLevel : MonoBehaviour {
 	{
 		// 1% = 2.88 units. C'est comme ça.
 		// (Ca dépend de la taille de l'image, en fait)
-		barImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, amount * 2.88f);
+		Debug.Log(amount);
+		barImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, (((float)amount/6.0f) * 288f));
 	}
 }

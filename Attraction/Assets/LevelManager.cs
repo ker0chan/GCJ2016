@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
-	float levelDuration = 10.0f;
+	float levelDuration = 60.0f;
 	float currentTime = 0.0f;
 	bool running = false;
 	SceneManager sceneManager;
@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		running = true;
+		
 		GameObject sceneManagerGO = GameObject.Find("SceneManager");
 		if(sceneManagerGO != null)
 		{
@@ -45,6 +45,11 @@ public class LevelManager : MonoBehaviour {
 		{
 			levelDataDictionary.Add(ld.name, ld);
 		}
+	}
+
+	public void Run()
+	{
+		running = true;
 	}
 
 	// Update is called once per frame

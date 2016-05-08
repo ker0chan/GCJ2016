@@ -4,6 +4,7 @@ using System.Collections;
 public class EnvironmentManager : MonoBehaviour {
 
 	LevelManager levelManager;
+	AffinityManager affinityManager;
 	GameObject[] obstacles;
 	GameObject[] backgrounds;
 	public Transform obstaclesContainer;
@@ -17,6 +18,8 @@ public class EnvironmentManager : MonoBehaviour {
 	void Start () {
 		levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 		levelManager.Init();
+		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
+
 		LevelManager.LevelData currentLevelData = levelManager.GetCurrentLevelData();
 		obstacles = currentLevelData.obstaclesPrefabs;
 		Debug.Log(obstacles.Length);
@@ -58,7 +61,13 @@ public class EnvironmentManager : MonoBehaviour {
 	{
 		int randomObstacle = Random.Range(0, obstacles.Length);
 		GameObject obstacle = (GameObject) Instantiate (obstacles[randomObstacle]);
-		obstacle.GetComponent<Obstacle>().SetGravityZone(Random.Range(-1, 2));
+		int gravityDirection = (Random.Range(0.0f, 1.0f) > 0.5)?1:-1;
+
+		//Minimum : x > 1/6 => 5 chance sur 6 d'avoir une zone de gravité
+		//Maximum : x > 6/6 => 0 chance sur 6 d'avoir une zone de gravité
+		bool gravityChance = Random.Range(0.0f, 1.0f) > (affinityManager.GetAffinity("pilote")/6);
+
+		obstacle.GetComponent<Obstacle>().SetGravityZone(gravityChance?gravityDirection:0);
 		obstacle.transform.SetParent(obstaclesContainer, false);
 	}
 	void SpawnBackground()
