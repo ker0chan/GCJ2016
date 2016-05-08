@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour {
 	public LevelData[] levelDataArray;
 
 	bool inited = false;
+	bool preEnd = false;
 
 	// Use this for initialization
 	void Start () {
@@ -49,7 +50,8 @@ public class LevelManager : MonoBehaviour {
 
 	public void endLvl()
 	{
-		currentTime = levelDuration - 1.0f;
+		currentTime = levelDuration - 3.0f;
+		preEnd = true;
 	}
 
 	public void Run()
@@ -63,6 +65,12 @@ public class LevelManager : MonoBehaviour {
 		if(running)
 		{
 			currentTime += Time.deltaTime;
+			if (currentTime + 3.0f >= levelDuration) {
+				if (preEnd == false) {
+					EnvironmentManager env = GameObject.Find ("EnvironmentManager").GetComponent<EnvironmentManager> ();
+					env.endLvl ();
+				}
+			}
 			if (currentTime >= levelDuration)
 			{
 				running = false;
