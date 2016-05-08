@@ -51,9 +51,9 @@ public class EnvironmentManager : MonoBehaviour {
 				currentObstacleSpawnTimer = 0.0f;
 				SpawnObstacle ();
 			}
-			if (backgroundsContainer.childCount < 3) {
-				SpawnBackground ();
-			}
+		}
+		if (backgroundsContainer.childCount < 3) {
+			SpawnBackground ();
 		}
 	}
 
