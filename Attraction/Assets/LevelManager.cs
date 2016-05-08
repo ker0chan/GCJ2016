@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void Run()
 	{
+		currentTime = 0.0f;
 		running = true;
 	}
 
