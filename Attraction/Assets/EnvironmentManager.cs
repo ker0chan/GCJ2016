@@ -13,6 +13,7 @@ public class EnvironmentManager : MonoBehaviour {
 	public float backgroundSpeed;
 	public float obstacleSpawnInterval;
 	float currentObstacleSpawnTimer = 0.0f;
+	bool end = false;
 
 	// Use this for initialization
 	void Start () {
@@ -44,17 +45,21 @@ public class EnvironmentManager : MonoBehaviour {
 			t.localPosition = backgroundPosition;
 		}
 
-		currentObstacleSpawnTimer += Time.deltaTime*SpeedModifierManager.speedModifier;
-		if(currentObstacleSpawnTimer >= obstacleSpawnInterval)
-		{
-			currentObstacleSpawnTimer = 0.0f;
-			SpawnObstacle();
+		if (end != true) {
+			currentObstacleSpawnTimer += Time.deltaTime * SpeedModifierManager.speedModifier;
+			if (currentObstacleSpawnTimer >= obstacleSpawnInterval) {
+				currentObstacleSpawnTimer = 0.0f;
+				SpawnObstacle ();
+			}
+			if (backgroundsContainer.childCount < 3) {
+				SpawnBackground ();
+			}
 		}
+	}
 
-		if(backgroundsContainer.childCount < 3)
-		{
-			SpawnBackground();
-		}
+	public void endLvl()
+	{
+		end = true;
 	}
 
 	void SpawnObstacle()

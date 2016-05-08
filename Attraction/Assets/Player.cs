@@ -53,6 +53,8 @@ public class Player : MonoBehaviour {
 	public Text scoreText;
 	public Text shieldText;
 
+	LevelManager lvlManager;
+	EnvironmentManager envManager;
 	// Use this for initialization
 	void Start () {
 		//Mémorise la position de départ du joueur
@@ -61,6 +63,8 @@ public class Player : MonoBehaviour {
 		UpdateScore();
 
 		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
+		lvlManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		envManager = GameObject.Find ("EnvironmentManager").GetComponent<EnvironmentManager> ();
 		//Minimum : 1/3.5
 		//Maximum: 7/3.5 = 2
 		float cooldownMultiplier = (float)(8-affinityManager.GetAffinity("bio")) / 3.5f;
@@ -258,7 +262,8 @@ public class Player : MonoBehaviour {
 		blinkAnimator.SetTrigger("Hit");
 		if(shieldLevel == 0)
 		{
-			
+			lvlManager.endLvl ();
+			envManager.endLvl ();
 		} else 
 		{
 			shieldLevel -= 1;

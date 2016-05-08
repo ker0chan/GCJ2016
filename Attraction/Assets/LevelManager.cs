@@ -47,6 +47,11 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
+	public void endLvl()
+	{
+		currentTime = levelDuration - 1.0f;
+	}
+
 	public void Run()
 	{
 		currentTime = 0.0f;
