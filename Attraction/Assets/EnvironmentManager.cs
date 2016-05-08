@@ -70,7 +70,7 @@ public class EnvironmentManager : MonoBehaviour {
 
 		//Minimum : x > 1/7 => 6 chance sur 7 d'avoir une zone de gravité
 		//Maximum : x > 7/7 => 0 chance sur 7 d'avoir une zone de gravité
-		bool gravityChance = Random.Range(0.0f, 1.0f) > (affinityManager.GetAffinity("pilote")/7);
+		bool gravityChance = Random.Range(0.0f, 1.0f) > ((float)(affinityManager.GetAffinity("pilote"))/7.0f);
 
 		obstacle.GetComponent<Obstacle>().SetGravityZone(gravityChance?gravityDirection:0);
 		obstacle.transform.SetParent(obstaclesContainer, false);

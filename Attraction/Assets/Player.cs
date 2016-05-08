@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
 	//gestionnaire d'affinités
 	AffinityManager affinityManager;
 
+	SoundManager soundManager;
+
 	//Niveau de bouclier actuel
 	int shieldLevel;
 	//Niveau de bouclier standard
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour {
 	public ParticleSystem teleportParticleSystem;
 	public Transform reticleSprite;
 
-	int score = 0;
+	public int score = 0;
 	public Text scoreText;
 	public Text shieldText;
 
@@ -65,6 +67,8 @@ public class Player : MonoBehaviour {
 		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
 		lvlManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
 		envManager = GameObject.Find ("EnvironmentManager").GetComponent<EnvironmentManager> ();
+		soundManager = GameObject.Find ("SoundManager").GetComponent<SoundManager> ();
+
 		//Minimum : 1/3.5
 		//Maximum: 7/3.5 = 2
 		float cooldownMultiplier = (float)(8-affinityManager.GetAffinity("bio")) / 3.5f;
@@ -135,6 +139,7 @@ public class Player : MonoBehaviour {
 			{
 				if(currentTeleportCooldown == 0.0f)
 				{
+					soundManager.Play("tpstart");
 					teleporting = true;
 					//Debug.Log("TP INIT");
 					ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
@@ -148,6 +153,7 @@ public class Player : MonoBehaviour {
 			{
 				if(teleporting)
 				{
+					soundManager.Play("tpchannel");
 					Vector3 screenTeleportPosition = Input.mousePosition;
 					Vector3 worldTeleportPosition = Camera.main.ScreenToWorldPoint(screenTeleportPosition);
 					reticleSprite.position = new Vector3(worldTeleportPosition.x, worldTeleportPosition.y, 0);
@@ -155,28 +161,33 @@ public class Player : MonoBehaviour {
 			}
 			if(rightTriggerValue < -0.2f)
 			{
-				if(Mathf.Abs(Input.GetAxis("RightJoystickY")) >= 0.2f || Mathf.Abs(Input.GetAxis("RightJoystickX")) >= 0.2f)
+				if(teleporting)
 				{
-					Vector3 temp = reticleSprite.localPosition;
-					temp.x += Input.GetAxis("RightJoystickX") * 0.3f;
-					temp.y -= Input.GetAxis("RightJoystickY") * 0.3f;
-					if(temp.magnitude > 8.0f)
+					soundManager.Play("tpchannel");
+					if(Mathf.Abs(Input.GetAxis("RightJoystickY")) >= 0.2f || Mathf.Abs(Input.GetAxis("RightJoystickX")) >= 0.2f)
 					{
-						temp *= (8.0f / temp.magnitude);
+						Vector3 temp = reticleSprite.localPosition;
+						temp.x += Input.GetAxis("RightJoystickX") * 0.3f;
+						temp.y -= Input.GetAxis("RightJoystickY") * 0.3f;
+						if(temp.magnitude > 8.0f)
+						{
+							temp *= (8.0f / temp.magnitude);
+						}
+						if(temp.x < 0.0f)
+						{
+							temp.x = 0.0f;
+						}
+						reticleSprite.localPosition = temp;
 					}
-					if(temp.x < 0.0f)
-					{
-						temp.x = 0.0f;
-					}
-					reticleSprite.localPosition = temp;
-
-
 				}
+
 			}
 			if(Input.GetMouseButtonUp(1) || rightTriggerValue > previousRightTriggerValue)
 			{
 				if(teleporting)
 				{
+					soundManager.Play("tpend");
+					soundManager.StopLoop();
 					//Debug.Log("TP DONE");
 					ParticleSystem.EmissionModule em = teleportParticleSystem.emission;
 		 			em.enabled = false;
@@ -259,6 +270,8 @@ public class Player : MonoBehaviour {
 	{
 		//Invincibilité => on quitte la fonction
 		if(isInvincible()) return;
+
+		soundManager.Play("hit");
 		blinkAnimator.SetTrigger("Hit");
 		if(shieldLevel == 0)
 		{

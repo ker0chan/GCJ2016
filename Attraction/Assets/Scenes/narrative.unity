@@ -1479,6 +1479,7 @@ MonoBehaviour:
   narrativeBackground: {fileID: 810289399}
   dialogueRunner: {fileID: 1710371523}
   levelManager: {fileID: 2052226304}
+  affinityManager: {fileID: 0}
   musicManager: {fileID: 266291949}
 --- !u!4 &1055490315
 Transform:
@@ -2302,8 +2303,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceText:
-  - {fileID: 4900000, guid: 728cd72c5926aed41a50bc81b3e003d3, type: 3}
   - {fileID: 4900000, guid: 594e79c9bdec864419cb8d6b66c90a6a, type: 3}
+  - {fileID: 4900000, guid: c65e59938837df547842c854a8907ffe, type: 3}
+  - {fileID: 4900000, guid: 9da64694317f60d4ba536abd3bd18305, type: 3}
   variableStorage: {fileID: 1710371526}
   dialogueUI: {fileID: 1710371527}
   startNode: intro
@@ -2363,7 +2365,7 @@ MonoBehaviour:
   affinityManager: {fileID: 849915305}
   sceneManager: {fileID: 1055490314}
   continuePrompt: {fileID: 0}
-  textSpeed: 0.008
+  textSpeed: 0
   optionButtons:
   - {fileID: 644130181}
   - {fileID: 264359633}

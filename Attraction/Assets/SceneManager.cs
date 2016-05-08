@@ -18,20 +18,28 @@ public class SceneManager : MonoBehaviour {
 	Queue<string> missions = new Queue<string>();
 	public Yarn.Unity.DialogueRunner dialogueRunner;
 	public LevelManager levelManager;
+	public AffinityManager affinityManager;
 	public MusicManager musicManager;
+
 
 	// Use this for initialization
 	void Start () {
 		missions.Enqueue("mission1");
-		missions.Enqueue("mission1");
 		missions.Enqueue("mission2");
 		missions.Enqueue("mission2");
 		missions.Enqueue("mission3");
 		missions.Enqueue("mission3");
+		missions.Enqueue("end");
+
+		affinityManager = GameObject.Find("AffinityManager").GetComponent<AffinityManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			LaunchMission();
+		}
 		if(fadingDirection != 0)
 		{
 			currentFadeTime += Time.deltaTime * fadingDirection;
@@ -70,6 +78,13 @@ public class SceneManager : MonoBehaviour {
 	public void OpenNarration()
 	{
 		string nextDialogue = missions.Dequeue();
+
+		if(nextDialogue == "end")
+		{
+			Application.LoadLevel("menu");
+			return;
+		}
+
 		FadeInAndLoad("narrative", () => {
 			musicManager.Play("quiet");
 			musicManager.Stop("battle");
@@ -78,9 +93,47 @@ public class SceneManager : MonoBehaviour {
 		});
 	}
 
+	public void Debrief(string currentLevel)
+	{
+		Player p = GameObject.Find("Player").GetComponent<Player>();
+		switch(currentLevel)
+		{
+			case "mission1":
+				if(p.score > 30)
+				{
+					affinityManager.AddAffinity("mecano", 1);
+				} else 
+				{
+					affinityManager.AddAffinity("pilote", 1);
+				}
+			break;
+			case "mission2":
+				if(p.score > 20)
+				{
+					affinityManager.AddAffinity("bio", 1);
+				} else 
+				{
+					affinityManager.AddAffinity("mecano", 1);
+				}
+			break;
+			case "mission3":
+				if(p.score > 30)
+				{
+					affinityManager.AddAffinity("bio", 1);
+				} else 
+				{
+					affinityManager.AddAffinity("pilote", 1);
+				}
+			break;
+		}
+
+	}
+
 	public void LaunchMission()
 	{
 		string nextLevel = missions.Dequeue();
+
+
 		FadeInAndLoad("arcadeDimitri", () => {
 			musicManager.Play("battle");
 			musicManager.Stop("quiet");

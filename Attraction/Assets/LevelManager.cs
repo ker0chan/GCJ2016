@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour {
 		if(running)
 		{
 			currentTime += Time.deltaTime;
-			if (currentTime + 3.0f >= levelDuration) {
+			if (currentTime + 3.0f >= levelDuration ) {
 				if (preEnd == false) {
 					EnvironmentManager env = GameObject.Find ("EnvironmentManager").GetComponent<EnvironmentManager> ();
 					env.endLvl ();
@@ -74,6 +74,8 @@ public class LevelManager : MonoBehaviour {
 			if (currentTime >= levelDuration)
 			{
 				running = false;
+
+				sceneManager.Debrief(currentLevel);
 				sceneManager.OpenNarration();
 			}
 		}
